@@ -73,15 +73,12 @@ export class RegisterComponent {
   }
 
   formatPhoneNumber(event: any) {
-    // Elimina caracteres no numéricos
     let input = event.target.value.replace(/\D/g, '');
 
     // Aplica el formato: "XXXX XXXXXXX"
     if (input.length > 4) {
       input = `${input.substring(0, 4)}-${input.substring(4, 10)}`;
     }
-
-    // Asigna el valor formateado al input
     event.target.value = input;
   }
 

@@ -4,11 +4,12 @@ import { AccesService } from '../../services/acces.service';
 import { Router } from '@angular/router';
 import { EventServiceService } from '../../services/event.service.service';
 import { Evento } from '../../interfaces/event.js';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [HeaderComponent],
+  imports: [HeaderComponent, CommonModule],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.css'
 })
@@ -16,8 +17,10 @@ import { Evento } from '../../interfaces/event.js';
 
 export class PerfilComponent implements OnInit {
   userProfile: any = {};
+  eventos: Evento[] = [];
+  tieneEventos: boolean = false;
 
-  constructor(private profileService: AccesService, private router: Router, private eventoService: EventServiceService) {}
+  constructor(private profileService: AccesService, private router: Router, private eventoService: EventServiceService) { }
 
   ngOnInit(): void {
     if (typeof window !== 'undefined') {
@@ -37,33 +40,50 @@ export class PerfilComponent implements OnInit {
         this.router.navigate(['/login']); // Redirige a login si no hay token
       }
     }
-  }
-  
-  
-  editProfile() {
-    this.router.navigate([`/profile/${this.userProfile.id}`]); 
+
+    this.verificarEventos();
   }
 
-  showOrders(){
-    this.router.navigate(['/my-tickets', this.userProfile.id]);
+  verificarEventos() {
+    this.eventoService.obtenerEventosUsuario().subscribe({
+      next: (data) => {
+        this.eventos = data;
+        this.tieneEventos = data && data.length > 0;
+      },
+      error: (err) => {
+        console.error('Error al obtener los eventos:', err);
+      },
+    });
   }
+  
+  editProfile() {
+      this.router.navigate([`/profile/${this.userProfile.id}`]);
+    }
+
+  showOrders(){
+      this.router.navigate(['/my-tickets', this.userProfile.id]);
+    }
 
 
   
 
   crearEvento(): void {
-    const token = localStorage.getItem('token');
-    if (token) {
-      this.router.navigate(['/create-event']);
-    } else {
-      this.router.navigate(['/login']);
+      const token = localStorage.getItem('token');
+      if(token) {
+        this.router.navigate(['/create-event']);
+      } else {
+        this.router.navigate(['/login']);
+      }
     }
-  }
 
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('cachedProfile');
-    this.router.navigate(['/']);
-  }
+      localStorage.removeItem('token');
+      localStorage.removeItem('cachedProfile');
+      this.router.navigate(['/']);
+    }
+
+  misEventos() {
+      this.router.navigate(['/my-events']);
+    }
 
 }
