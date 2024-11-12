@@ -14,10 +14,11 @@ import { UsuarioEdit } from '../interfaces/UsuarioEdit';
 export class AccesService {
 
   private http = inject(HttpClient)
-  private urlBase: string = "https://backend-eventlife.onrender.com/api/user/"
+  //private urlBase: string = "https://backend-eventlife.onrender.com/api/user/"
+  private urlBase: string = "http://localhost:3000/api/user/"
   constructor() { }
 
-  registrarse(objeto: Usuario){
+  registrarse(objeto: Usuario) {
     return this.http.post(`${this.urlBase}register`, objeto)
   }
 
