@@ -36,7 +36,7 @@ export class LoginComponent {
 
       this.AccesService.login(objeto).subscribe({
         next: (response) => {
-          this.mostrarFeedback('Sesión iniciada con exito!', true);
+          this.mostrarFeedback('Sesión iniciada con éxito!', true);
           setTimeout(() => {
             this.router.navigate(['/']);
           }, 900);
