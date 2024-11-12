@@ -1,0 +1,38 @@
+<main>
+
+  <app-header></app-header>
+
+  <section class="container p-3 mt-5 pt-4">
+  <form [formGroup]="formCategory" class="mb-3 p-3 border rounded">
+    <div class="mb-3">
+      <input type="text" class="form-control" placeholder="Nombre de la categoría" formControlName="name">
+    </div>
+    <button type="button" class="btn btn-primary" (click)="CargarCategoria()">Cargar</button>
+  </form>
+  
+  <div *ngIf="categorias && categorias.length > 0; else noCategorias">
+    <table class="table table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nombre Categoría</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let categoria of categorias; let i = index">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ categoria.name }}</td>
+          <td>
+            <button class="btn btn-danger btn-sm me-2" (click)="eliminarCategoria(categoria.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <ng-template #noCategorias>
+    <p class="text-muted">No hay categorías disponibles.</p>
+  </ng-template>
+</section>
+</main>

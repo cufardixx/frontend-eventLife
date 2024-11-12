@@ -1,0 +1,10 @@
+@media (max-width: 768px) {
+    .custom-mobile {
+        margin-top: 50px;
+    }
+}
+
+.is-invalid {
+    border-color: #dc3545;
+  }
+
