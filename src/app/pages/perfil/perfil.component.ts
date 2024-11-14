@@ -19,6 +19,7 @@ export class PerfilComponent implements OnInit {
   userProfile: any = {};
   eventos: Evento[] = [];
   tieneEventos: boolean = false;
+  esAdmin: boolean = false;
 
   constructor(private profileService: AccesService, private router: Router, private eventoService: EventServiceService) { }
 
@@ -28,8 +29,10 @@ export class PerfilComponent implements OnInit {
       if (token) {
         this.profileService.getProfile(token).subscribe({
           next: (data) => {
-            console.log(data);
             this.userProfile = data;
+            if(data.rol == "admin"){
+              this.esAdmin = true
+            }
           },
           error: (err) => {
             console.error('Error al obtener el perfil:', err);
@@ -55,35 +58,40 @@ export class PerfilComponent implements OnInit {
       },
     });
   }
-  
+
+
+  panelAdmin(){
+    this.router.navigate(['/admin'])
+  }
+
   editProfile() {
-      this.router.navigate([`/profile/${this.userProfile.id}`]);
-    }
+    this.router.navigate([`/profile/${this.userProfile.id}`]);
+  }
 
-  showOrders(){
-      this.router.navigate(['/my-tickets', this.userProfile.id]);
-    }
+  showOrders() {
+    this.router.navigate(['/my-tickets', this.userProfile.id]);
+  }
 
 
-  
+
 
   crearEvento(): void {
-      const token = localStorage.getItem('token');
-      if(token) {
-        this.router.navigate(['/create-event']);
-      } else {
-        this.router.navigate(['/login']);
-      }
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.router.navigate(['/create-event']);
+    } else {
+      this.router.navigate(['/login']);
     }
+  }
 
   logout() {
-      localStorage.removeItem('token');
-      localStorage.removeItem('cachedProfile');
-      this.router.navigate(['/']);
-    }
+    localStorage.removeItem('token');
+    localStorage.removeItem('cachedProfile');
+    this.router.navigate(['/']);
+  }
 
   misEventos() {
-      this.router.navigate(['/my-events']);
-    }
+    this.router.navigate(['/my-events']);
+  }
 
 }
