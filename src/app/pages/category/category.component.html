@@ -27,6 +27,7 @@
               <th scope="col">#</th>
               <th scope="col">Nombre Categoría</th>
               <th scope="col">Acciones</th>
+              
             </tr>
           </thead>
           <tbody>
@@ -56,6 +57,7 @@
             <th scope="col">#</th>
             <th scope="col">Usuario</th>
             <th scope="col">Email</th>
+            <th scope="col">ID</th>
             <th scope="col">Acciones</th>
           </tr>
         </thead>
@@ -64,6 +66,7 @@
             <th scope="row">{{ i + 1 }}</th>
             <td>{{ usuario.firstname }}</td>
             <td>{{ usuario.email }}</td>
+            <td>{{ usuario.id }}</td>
             <td>
               <button class="btn btn-danger btn-sm me-2" (click)="borrarUsuario(usuario.id!)">Eliminar</button>
             </td>
